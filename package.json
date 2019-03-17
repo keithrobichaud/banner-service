@@ -1,0 +1,38 @@
+{
+  "name": "keef-s-banner-service",
+  "description": "Keef's banner service",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "author": "Keith Robichaud",
+  "engines": {
+    "node": ">=8"
+  },
+  "repository": "https://github.com/keithrobichaud/banner-service",
+  "main": "app.js",
+  "private": true,
+  "cloud-repo-tools": {
+    "requiresKeyFile": true,
+    "requiresProjectId": true,
+    "test": {
+      "app": {
+        "args": [
+          "app.js"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "start": "node app.js",
+    "e2e": "repo-tools test deploy",
+    "test": "repo-tools test app",
+    "cover": "nyc --cache npm test; nyc report --reporter=html"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@google-cloud/nodejs-repo-tools": "^3.0.0",
+    "ava": "^0.25.0",
+    "supertest": "^4.0.0"
+  }
+}
