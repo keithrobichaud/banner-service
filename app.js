@@ -14,6 +14,7 @@ const web = new WebClient(token);
 app.post("/", function(req, res, next) {
     // Get event payload
     let payload = req.body;
+    console.log(payload);
 
     const text = payload.text;
     const args = text.split(" ");
