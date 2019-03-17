@@ -13,6 +13,8 @@
 'use strict';
 const express = require('express');
 const app = express();
+const makeBanner = require('./makeBanner.js');
+
 // [START hello_world]
 // Say hello!
 app.post("/", function(req, res, next) {
@@ -20,6 +22,10 @@ app.post("/", function(req, res, next) {
     let payload = req.body;
     // Respond to this event with HTTP 200 status
     res.send('PUT request to homepage');
+});
+
+app.get("/", function (req, res, next) {
+    res.send(makeBanner('yo', ':alert:'));
 });
 
 if (module === require.main) {
