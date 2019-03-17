@@ -13,10 +13,9 @@ const web = new WebClient(token);
 // Say hello!
 app.post("/", function(req, res, next) {
     // Get event payload
-    let payload = req.body;
-    console.log(payload);
+    console.log(req);
 
-    const text = payload.text;
+    const text = req.text;
     const args = text.split(" ");
     const string = args[0].replace(/[^a-zA-Z ]/g, '');
 
