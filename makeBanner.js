@@ -283,7 +283,7 @@ function banner(str, emoji1, emoji2 = ':white_square:') {
 		} else {
 			functionName = 'make' + char.toUpperCase();
 		}
-		output += window[functionName](...args);
+		output += global[functionName](...args);
 	}
 	output += line(...args);
 	return output;
