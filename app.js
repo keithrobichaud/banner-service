@@ -20,7 +20,7 @@ app.post("/", function(req, res, next) {
     let payload = req.body;
     // Respond to this event with HTTP 200 status
     res.sendStatus(200);
-}
+});
 
 if (module === require.main) {
   // [START server]
