@@ -19,7 +19,7 @@ app.post("/", function(req, res, next) {
     // Get event payload
     let payload = req.body;
     // Respond to this event with HTTP 200 status
-    res.sendStatus(200);
+    res.send('PUT request to homepage');
 });
 
 if (module === require.main) {
