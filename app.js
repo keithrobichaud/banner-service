@@ -1,18 +1,9 @@
-// Copyright 2018, Google LLC.
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 'use strict';
 const express = require('express');
 const app = express();
+const { WebClient } = require('@slack/client');
+
+
 const makeBanner = require('./makeBanner.js');
 
 // [START hello_world]
@@ -25,7 +16,23 @@ app.post("/", function(req, res, next) {
 });
 
 app.get("/", function (req, res, next) {
-    res.send(makeBanner('yo', ':alert:'));
+    // An access token (from your Slack app or custom integration - xoxp, xoxb)
+    const token = process.env.SLACK_TOKEN;
+
+    const web = new WebClient(token);
+
+    // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
+    const conversationId = '#slack-test';
+    
+    (async () => {
+      // See: https://api.slack.com/methods/chat.postMessage
+      const res = await web.chat.postMessage({ channel: conversationId, text: makeBanner('yo', ':alert:') });
+
+      // `res` contains information about the posted message
+      console.log('Message sent: ', res.ts);
+    })();
+   
+    res.send(200);
 });
 
 if (module === require.main) {
