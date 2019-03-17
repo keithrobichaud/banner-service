@@ -288,3 +288,5 @@ function banner(str, emoji1, emoji2 = ':white_square:') {
 	output += line(...args);
 	return output;
 }
+
+module.exports = banner;
