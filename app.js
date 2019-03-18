@@ -18,28 +18,28 @@ app.post("/", function(req, res, next) {
         body += chunk;
     });
     req.on('end', () => {
-        console.log(body);
+        console.log('body: ', body);
+        
+        const payload = qs.parse(body);
+        console.log('payload: ', payload);
+        const text = payload.text;
+        console.log('text: ', text);
+        const args = text.split(" ");
+        const string = args[0].replace(/[^a-zA-Z ]/g, '');
+
+        // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
+        const conversationId = '#slack-test';
+
+        (async () => {
+          // See: https://api.slack.com/methods/chat.postMessage
+          const res = await web.chat.postMessage({ channel: conversationId, text: makeBanner(string, args[1], args[2]) });
+
+          // `res` contains information about the posted message
+          console.log('Message sent: ', res.ts);
+        })();
+
+        res.send(200);
     });
-
-    const payload = qs.parse(body);
-    console.log(payload);
-    const text = payload.text;
-    console.log(text);
-    const args = text.split(" ");
-    const string = args[0].replace(/[^a-zA-Z ]/g, '');
-
-    // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
-    const conversationId = '#slack-test';
-
-    (async () => {
-      // See: https://api.slack.com/methods/chat.postMessage
-      const res = await web.chat.postMessage({ channel: conversationId, text: makeBanner(string, args[1], args[2]) });
-
-      // `res` contains information about the posted message
-      console.log('Message sent: ', res.ts);
-    })();
-
-    res.send(200);
 });
 
 app.get("/", function (req, res, next) {
