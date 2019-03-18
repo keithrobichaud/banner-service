@@ -27,7 +27,7 @@ app.post("/", function(req, res, next) {
         let messageParts = [];
         for (var i = 0; i < args.length; i++) {
             if (args[i][0] === ':') {
-                emojs.push(args[i]);
+                emojis.push(args[i]);
             } else {
                 messageParts.push(args[i]);
             }
