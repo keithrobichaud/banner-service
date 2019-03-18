@@ -19,7 +19,7 @@ app.post("/", function(req, res, next) {
     });
     req.on('end', () => {
         const payload = qs.parse(body);
-        conole.log(payload);
+        console.log(payload);
         const text = payload.text;
         console.log('text: ', text);
         const args = text.split(" ");
@@ -44,7 +44,7 @@ app.post("/", function(req, res, next) {
             // See: https://api.slack.com/methods/chat.postMessage
             const message = makeBanner(escapedString, ...emojis);
             console.log(message);
-            const result = await web.chat.postMessage({ channel: conversationId, text: message });
+            const result = await web.chat.postMessage({ channel: conversationId, text: message, as_user: false });
 
              // `res` contains information about the posted message
             console.log('Message sent: ', result.ts);
