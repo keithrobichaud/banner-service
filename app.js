@@ -19,6 +19,7 @@ app.post("/", function(req, res, next) {
     });
     req.on('end', () => {
         const payload = qs.parse(body);
+        conole.log(payload);
         const text = payload.text;
         console.log('text: ', text);
         const args = text.split(" ");
