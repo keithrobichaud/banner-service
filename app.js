@@ -21,15 +21,27 @@ app.post("/", function(req, res, next) {
         const payload = qs.parse(body);
         const text = payload.text;
         console.log('text: ', text);
-        const args = text.match(/(?:[^\s"]+|"[^"]*")+/g);
-        const string = args[0].replace(/[^a-zA-Z ]/g, '');
+        const args = text.split(" ");
+        
+        let emojis = [];
+        let messageParts = [];
+        for (var i = 0; i < args.length; i++) {
+            if (args[i][0] === ':') {
+                emojs.push(args[i]);
+            } else {
+                messageParts.push(args[i]);
+            }
+        }
+        
+        const string = messageParts.join(" ");
+        const escapedString = string.replace(/[^a-zA-Z ]/g, '');
 
         // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
         const conversationId = '#slack-test';
 
         (async () => {
             // See: https://api.slack.com/methods/chat.postMessage
-            const message = makeBanner(string, args[1], args[2]);
+            const message = makeBanner(escapedString, ...emojis);
             console.log(message);
             const result = await web.chat.postMessage({ channel: conversationId, text: message });
 
