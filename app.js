@@ -21,7 +21,7 @@ app.post("/", function(req, res, next) {
         const payload = qs.parse(body);
         const text = payload.text;
         console.log('text: ', text);
-        const args = text.split(" ");
+        const args = text.match(/(?:[^\s"]+|"[^"]*")+/g);
         const string = args[0].replace(/[^a-zA-Z ]/g, '');
 
         // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
