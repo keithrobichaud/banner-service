@@ -35,7 +35,8 @@ app.post("/", function(req, res, next) {
 
              // `res` contains information about the posted message
             console.log('Message sent: ', result.ts);
-            res.sendStatus(200);
+            res.write(message);
+//             res.sendStatus(200);
         })();
     });
 });
