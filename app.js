@@ -32,13 +32,12 @@ app.post("/", function(req, res, next) {
 
         (async () => {
           // See: https://api.slack.com/methods/chat.postMessage
-          const res = await web.chat.postMessage({ channel: conversationId, text: makeBanner(string, args[1], args[2]) });
+          const result = await web.chat.postMessage({ channel: conversationId, text: makeBanner(string, args[1], args[2]) });
 
           // `res` contains information about the posted message
-          console.log('Message sent: ', res.ts);
+          console.log('Message sent: ', result.ts);
+          res.sendStatus(200);
         })();
-
-        res.send(200);
     });
 });
 
