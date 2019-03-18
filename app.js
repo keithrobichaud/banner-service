@@ -29,6 +29,8 @@ app.post("/", function(req, res, next) {
       // `res` contains information about the posted message
       console.log('Message sent: ', res.ts);
     })();
+
+    res.send(200);
 });
 
 app.get("/", function (req, res, next) {
