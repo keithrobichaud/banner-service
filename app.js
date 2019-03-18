@@ -37,8 +37,10 @@ app.post("/", function(req, res, next) {
         const string = messageParts.join(" ");
         const escapedString = string.replace(/[^a-zA-Z ]/g, '');
 
-        // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
-        const conversationId = payload.channel_name;
+        let conversationId = payload.channel_name;
+        if (conversationId === 'directmessage') {
+            conversationId = payload.channel_id;
+        }
 
         (async () => {
             // See: https://api.slack.com/methods/chat.postMessage
