@@ -1,4 +1,5 @@
 'use strict';
+const qs = require('qs')
 const express = require('express');
 const app = express();
 const { WebClient } = require('@slack/client');
@@ -14,16 +15,14 @@ const web = new WebClient(token);
 app.post("/", function(req, res, next) {
     let body = '';
     req.on('data', (chunk) => {
-        console.log(chunk);
         body += chunk;
     });
     req.on('end', () => {
         console.log(body);
-        res.write('OK');
-        res.end();
     });
 
-    const text = body.text;
+    const payload = qs.parse(body);
+    const text = payload.text;
     console.log(text);
     const args = text.split(" ");
     const string = args[0].replace(/[^a-zA-Z ]/g, '');
