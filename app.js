@@ -13,14 +13,14 @@ const web = new WebClient(token);
 // Say hello!
 app.post("/", function(req, res, next) {
     let body = '';
-    r.on('data', (chunk) => {
+    req.on('data', (chunk) => {
         console.log(chunk);
         body += chunk;
     });
-    r.on('end', () => {
+    req.on('end', () => {
         console.log(body);
-        s.write('OK'); 
-        s.end(); 
+        res.write('OK');
+        res.end();
     });
 
     const text = body.text;
