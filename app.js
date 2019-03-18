@@ -18,10 +18,7 @@ app.post("/", function(req, res, next) {
         body += chunk;
     });
     req.on('end', () => {
-        console.log('body: ', body);
-        
         const payload = qs.parse(body);
-        console.log('payload: ', payload);
         const text = payload.text;
         console.log('text: ', text);
         const args = text.split(" ");
@@ -31,12 +28,14 @@ app.post("/", function(req, res, next) {
         const conversationId = '#slack-test';
 
         (async () => {
-          // See: https://api.slack.com/methods/chat.postMessage
-          const result = await web.chat.postMessage({ channel: conversationId, text: makeBanner(string, args[1], args[2]) });
+            // See: https://api.slack.com/methods/chat.postMessage
+            const message = makeBanner(string, args[1], args[2]);
+            console.log(message);
+            const result = await web.chat.postMessage({ channel: conversationId, text: message });
 
-          // `res` contains information about the posted message
-          console.log('Message sent: ', result.ts);
-          res.sendStatus(200);
+             // `res` contains information about the posted message
+            console.log('Message sent: ', result.ts);
+            res.sendStatus(200);
         })();
     });
 });
