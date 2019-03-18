@@ -37,7 +37,7 @@ app.post("/", function(req, res, next) {
         const escapedString = string.replace(/[^a-zA-Z ]/g, '');
 
         // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
-        const conversationId = '#slack-test';
+        const conversationId = payload.channel_name;
 
         (async () => {
             // See: https://api.slack.com/methods/chat.postMessage
@@ -48,9 +48,11 @@ app.post("/", function(req, res, next) {
              // `res` contains information about the posted message
             console.log('Message sent: ', result.ts);
             res.write(message);
-            res.sendStatus(200);
+            
         })();
     });
+
+    res.sendStatus(200);
 });
 
 app.get("/", function (req, res, next) {
