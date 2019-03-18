@@ -13,7 +13,7 @@ const web = new WebClient(token);
 // Say hello!
 app.post("/", function(req, res, next) {
     // Get event payload
-    console.log(req);
+    console.log('req: ', req);
 
     const text = req.text;
     const args = text.split(" ");
