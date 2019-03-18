@@ -12,9 +12,16 @@ const web = new WebClient(token);
 
 // Say hello!
 app.post("/", function(req, res, next) {
-    // Get event payload
-    const body = req.body;
-    console.log('req.body: ', body);
+    let body = '';
+    r.on('data', (chunk) => {
+        console.log(chunk);
+        body += chunk;
+    });
+    r.on('end', () => {
+        console.log(body);
+        s.write('OK'); 
+        s.end(); 
+    });
 
     const text = body.text;
     console.log(text);
