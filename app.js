@@ -22,6 +22,7 @@ app.post("/", function(req, res, next) {
     });
 
     const payload = qs.parse(body);
+    console.log(payload);
     const text = payload.text;
     console.log(text);
     const args = text.split(" ");
