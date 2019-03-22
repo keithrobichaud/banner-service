@@ -11,7 +11,6 @@ const token = process.env.SLACK_TOKEN;
 
 const web = new WebClient(token);
 
-// Say hello!
 app.post("/", function(req, res, next) {
     let body = '';
     req.on('data', (chunk) => {
@@ -43,19 +42,19 @@ app.post("/", function(req, res, next) {
         }
 
         (async () => {
+            const userName = payload.user_name;
             // See: https://api.slack.com/methods/chat.postMessage
-            const message = makeBanner(escapedString, ...emojis);
+            const message = makeBanner(escapedString, userName, ...emojis);
             console.log(message);
             const result = await web.chat.postMessage({ channel: conversationId, text: message, as_user: false });
 
              // `res` contains information about the posted message
             console.log('Message sent: ', result.ts);
-            res.write(message);
-            
+//             res.write(message);
         })();
     });
 
-    res.sendStatus(200);
+//     res.sendStatus(200);
 });
 
 app.get("/", function (req, res, next) {
