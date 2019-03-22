@@ -270,8 +270,13 @@ function line(_, O) {
 `;
 }
 
+function lineWithText(_, text) {
+	return `${_}${_}${_}${text}${_}${_}${_}
+`;
+}
 
-function banner(str, emoji1, emoji2 = ':white_square:') {
+
+function banner(str, userName, emoji1, emoji2 = ':white_square:') {
 	var args = [emoji2, emoji1];
 	var output = "";
 	for (var i = 0; i < str.length; i++) {
@@ -285,7 +290,10 @@ function banner(str, emoji1, emoji2 = ':white_square:') {
 		}
 		output += eval(functionName)(...args);
 	}
+
 	output += line(...args);
+	output += lineWithText(emoji2, 'from ' + userName);
+
 	return output;
 }
 
