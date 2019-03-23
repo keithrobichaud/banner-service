@@ -307,7 +307,7 @@ function banner({ str, userName, time = 'NOW', emojis }) {
 	}
 
 	output += line(...args);
-	output += lineWithText(emoji2, 'from ' + userName);
+	output += ('- ' + userName);
 
 	return output;
 }
