@@ -274,10 +274,12 @@ function lineWithText(_, text) {
 	var numSpaces = 3;
 	var numToRemove = Math.min(Math.ceil(text.length / 7.5), 3);
 	numSpaces -= numToRemove;
+	const numInTextSpaces = 6 - (text.length % 7);
+	const spaceStr = ' '.repeat(numInTextSpaces);
 
-	var spacesStr = _.repeat(numSpaces);
+	var emojis = _.repeat(numSpaces);
 
-	return `${spacesStr}${text}${spacesStr}
+	return `${emojis}${spaceStr}${text}${spaceStr}${emojis}
 `;
 }
 
@@ -289,6 +291,9 @@ function banner({ str, userName, time = 'NOW', emojis }) {
 
 	var args = [emoji2, emoji1];
 	var output = "";
+
+	output += lineWithText(emoji2, time);
+
 	for (var i = 0; i < str.length; i++) {
 		var functionName = '';
 		var char = str.charAt(i);
@@ -301,8 +306,6 @@ function banner({ str, userName, time = 'NOW', emojis }) {
 		output += eval(functionName)(...args);
 	}
 
-	output += line(...args);
-	output += lineWithText(emoji2, time);
 	output += line(...args);
 	output += lineWithText(emoji2, 'from ' + userName);
 

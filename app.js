@@ -55,7 +55,8 @@ app.post("/", function(req, res, next) {
             if (argInput[0] === ':') {
 				emojis.push(argInput);
 			} else if (parseTime(argInput)) {
-				time = formatDate(argInput);
+				const parsedTime = parseTime(argInput);
+				time = formatDate(parsedTime);
             } else {
                 messageParts.push(argInput);
             }
