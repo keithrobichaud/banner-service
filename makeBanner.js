@@ -281,8 +281,7 @@ function lineWithText(_, text) {
 `;
 }
 
-
-function banner({ str, userName, emojis }) {
+function banner({ str, userName, time = 'NOW', emojis }) {
 	const [
 		emoji1,
 		emoji2 = ':white_square:'
@@ -302,6 +301,8 @@ function banner({ str, userName, emojis }) {
 		output += eval(functionName)(...args);
 	}
 
+	output += line(...args);
+	output += lineWithText(emoji2, time);
 	output += line(...args);
 	output += lineWithText(emoji2, 'from ' + userName);
 

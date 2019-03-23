@@ -11,6 +11,30 @@ const token = process.env.SLACK_TOKEN;
 
 const web = new WebClient(token);
 
+function parseTime(timeString) {	
+	if (timeString == '') return null;
+	
+	var time = timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i);	
+	if (time == null) return null;
+	
+	var hours = parseInt(time[1],10);	 
+	if (hours == 12 && !time[4]) {
+		  hours = 0;
+	}
+	else {
+		hours += (hours < 12 && time[4])? 12 : 0;
+	}	
+	var d = new Date();    	    	
+	d.setHours(hours);
+	d.setMinutes(parseInt(time[3],10) || 0);
+	d.setSeconds(0, 0);	 
+	return d;
+}
+
+function formatDate(date) {
+	return date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' })
+}
+
 app.post("/", function(req, res, next) {
     let body = '';
     req.on('data', (chunk) => {
@@ -22,14 +46,18 @@ app.post("/", function(req, res, next) {
         const text = payload.text;
         console.log('text: ', text);
         const args = text.split(" ");
-        
+
+		let time;
         let emojis = [];
         let messageParts = [];
         for (var i = 0; i < args.length; i++) {
-            if (args[i][0] === ':') {
-                emojis.push(args[i]);
+			const argInput = args[i];
+            if (argInput[0] === ':') {
+				emojis.push(argInput);
+			} else if (parseTime(argInput)) {
+				time = formatDate(argInput);
             } else {
-                messageParts.push(args[i]);
+                messageParts.push(argInput);
             }
         }
         
@@ -44,7 +72,7 @@ app.post("/", function(req, res, next) {
         (async () => {
             const userName = payload.user_name;
             // See: https://api.slack.com/methods/chat.postMessage
-            const message = makeBanner({ str: escapedString, userName, emojis });
+            const message = makeBanner({ str: escapedString, userName, emojis, time });
             console.log(message);
             const result = await web.chat.postMessage({ channel: conversationId, text: message, as_user: false });
 
