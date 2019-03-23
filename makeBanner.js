@@ -274,7 +274,7 @@ function lineWithText(_, text) {
 	var numSpaces = 3;
 	var numToRemove = Math.min(Math.ceil(text.length / 7.5), 3);
 	numSpaces -= numToRemove;
-	const numInTextSpaces = 6 - (text.length % 7);
+	const numInTextSpaces = Math.max(4 - (text.length % 7.5), 0);
 	const spaceStr = ' '.repeat(numInTextSpaces);
 
 	var emojis = _.repeat(numSpaces);
