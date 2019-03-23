@@ -44,7 +44,7 @@ app.post("/", function(req, res, next) {
         (async () => {
             const userName = payload.user_name;
             // See: https://api.slack.com/methods/chat.postMessage
-            const message = makeBanner(escapedString, userName, ...emojis);
+            const message = makeBanner({ str: escapedString, userName, emojis });
             console.log(message);
             const result = await web.chat.postMessage({ channel: conversationId, text: message, as_user: false });
 

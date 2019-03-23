@@ -272,7 +272,7 @@ function line(_, O) {
 
 function lineWithText(_, text) {
 	var numSpaces = 3;
-	var numToRemove = Math.max(Math.ceil(text.length / 7.5), 3);
+	var numToRemove = Math.min(Math.ceil(text.length / 7.5), 3);
 	numSpaces -= numToRemove;
 
 	var spacesStr = _.repeat(numSpaces);
@@ -282,7 +282,12 @@ function lineWithText(_, text) {
 }
 
 
-function banner(str, userName, emoji1, emoji2 = ':white_square:') {
+function banner({ str, userName, emojis }) {
+	const [
+		emoji1,
+		emoji2 = ':white_square:'
+	] = emojis;
+
 	var args = [emoji2, emoji1];
 	var output = "";
 	for (var i = 0; i < str.length; i++) {
