@@ -54,7 +54,7 @@ app.post("/", function(req, res, next) {
         })();
     });
 
-//     res.sendStatus(200);
+    res.sendStatus(200);
 });
 
 app.get("/", function (req, res, next) {
