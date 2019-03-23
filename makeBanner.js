@@ -271,7 +271,13 @@ function line(_, O) {
 }
 
 function lineWithText(_, text) {
-	return `${_}${_}${_}${text}${_}${_}${_}
+	var numSpaces = 3;
+	var numToRemove = Math.max(Math.ceil(text.length / 7.5), 3);
+	numSpaces -= numToRemove;
+
+	var spacesStr = _.repeat(numSpaces);
+
+	return `${spacesStr}${text}${spacesStr}
 `;
 }
 
