@@ -283,7 +283,7 @@ function lineWithText(_, text) {
 `;
 }
 
-function banner({ str, userName, time = 'NOW', emojis }) {
+function banner({ str, userName, time, emojis, chunkSize }) {
 	const [
 		emoji1,
 		emoji2 = ':white_square:'
@@ -292,9 +292,17 @@ function banner({ str, userName, time = 'NOW', emojis }) {
 	var args = [emoji2, emoji1];
 	var output = "";
 
-	output += lineWithText(emoji2, time);
+	if (time) {
+		output += lineWithText(emoji2, time);
+	}
+
+	let chunkedOutput = [];
 
 	for (var i = 0; i < str.length; i++) {
+		if (chunkSize && chunkSize < output.length) {
+			chunkedOutput.push(output);
+			output = "";
+		}
 		var functionName = '';
 		var char = str.charAt(i);
 
@@ -307,9 +315,15 @@ function banner({ str, userName, time = 'NOW', emojis }) {
 	}
 
 	output += line(...args);
-	output += ('- ' + userName);
+	if (userName) {
+		output += ('- ' + userName);
+	}
 
-	return output;
+	if (chunkSize) {
+		chunkedOutput.push(output)
+	}
+
+	return chunkSize ? chunkedOutput : output;
 }
 
 module.exports = banner;
