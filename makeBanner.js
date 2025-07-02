@@ -258,6 +258,27 @@ ${_}${O}${O}${O}${O}${O}${_}
 `;
 }
 
+function makeExclamation(_, O) {
+	return `${_}${_}${_}${O}${_}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+${_}${_}${_}${_}${_}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+`;
+}
+
+function makeQuestionMark(_, O) {
+    return `${_}${_}${O}${O}${O}${O}${_}
+${_}${O}${_}${_}${_}${O}${_}
+${_}${_}${_}${_}${O}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+${_}${_}${_}${_}${_}${_}${_}
+${_}${_}${_}${O}${_}${_}${_}
+`;
+}
+
+// Existing code...
 function blank(_, O) {
 	return `${_}${_}${_}${_}${_}${_}${_}
 ${_}${_}${_}${_}${_}${_}${_}
@@ -306,11 +327,22 @@ function banner({ str, userName, time, emojis, chunkSize }) {
 		var functionName = '';
 		var char = str.charAt(i);
 
-		if (char === ' ') {
-			functionName = 'blank';
-		} else {
-			functionName = 'make' + char.toUpperCase();
+		switch (char) {
+			case ' ':
+				functionName = 'blank';
+				break;
+			case '!':
+				functionName = 'makeExclamation';
+				break;
+			case '?':
+				functionName = 'makeQuestionMark';
+				break;
+			default:
+				functionName = 'make' + char.toUpperCase();
+				break;
 		}
+
+		console.log(functionName, args);
 		output += eval(functionName)(...args);
 	}
 
